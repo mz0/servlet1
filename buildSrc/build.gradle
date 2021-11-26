@@ -1,0 +1,23 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+repositories {
+ mavenCentral()
+}
+
+dependencies {
+ def tomcatVersion = '9.0.55'
+ compileOnly "org.apache.tomcat:tomcat-catalina:${tomcatVersion}",
+  "org.apache.tomcat:tomcat-coyote:${tomcatVersion}",
+  "org.apache.tomcat:tomcat-jasper:${tomcatVersion}"
+}
+
+gradlePlugin {
+    plugins {
+        myPlugins {
+            id = 'tomcat-plugin'
+            implementationClass = 'com.bmuschko.gradle.tomcat.TomcatPlugin'
+        }
+    }
+}

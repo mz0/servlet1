@@ -1,18 +1,27 @@
 plugins {
  id 'war'
- id 'org.gretty' version '3.0.7' // run Jetty 9.4.24.v20191120 by default
+ id 'tomcat-plugin'
 }
 
+ext.tomcatVersion = '9.0.55'
+
 repositories {
-    mavenCentral()
+ mavenCentral()
 }
 
 dependencies {
-    implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+ implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+ tomcat  "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+      // "org.apache.tomcat:tomcat-dbcp:${tomcatVersion}", // for JNDI datasources
+         "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+/* implementation "org.apache.tomcat:tomcat-catalina:${tomcatVersion}",
+         "org.apache.tomcat:tomcat-coyote:${tomcatVersion}",
+         "org.apache.tomcat:tomcat-jasper:${tomcatVersion}" */
 }
-
-gretty {
- // servletContainer = "jetty9.4"
-    httpPort = 9090
- // contextPath = '/'
+tomcatRun {
+ httpPort = 9090
+ stopPort = 9095
+ daemon = true
+ contextPath = '/'
+// outputFile = '/tmp/tomcat-9090.log'
 }
