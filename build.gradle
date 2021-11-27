@@ -18,7 +18,7 @@ dependencies {
          "org.apache.tomcat:tomcat-coyote:${tomcatVersion}",
          "org.apache.tomcat:tomcat-jasper:${tomcatVersion}" */
 }
-tomcatRun {
+tomcat {
  httpPort = 9090
  stopPort = 9095
  daemon = true
