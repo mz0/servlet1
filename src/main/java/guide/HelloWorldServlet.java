@@ -1,20 +1,21 @@
 package guide;
 
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+@WebServlet("/")
 public class HelloWorldServlet extends HttpServlet {
-    private String mymsg;
-    public void init() throws ServletException {
-       mymsg = "Http Servlet Demo";
-    }
+    private String mymsg = "Http Servlet Demo";
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<h1>" + mymsg + "</h1>");
-        out.println("<p>" + "Ahoy ahoy!" + "</p>");
+        out.printf("<h1>%s</h1>\r\n", mymsg);
+        out.printf("<p>Ahoy ahoy!</p>\r\n");
     }
 }
