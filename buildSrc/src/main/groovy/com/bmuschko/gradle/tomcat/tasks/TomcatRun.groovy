@@ -15,11 +15,9 @@
  */
 package com.bmuschko.gradle.tomcat.tasks
 
-import com.bmuschko.gradle.tomcat.embedded.TomcatVersion
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 
 /**
@@ -56,15 +54,12 @@ class TomcatRun extends AbstractTomcatRun {
         validateConfigFile()
     }
 
-    /**
-     * Validate the configuration file.
-     */
     private void validateConfigFile() {
         File resolvedWebAppSourceDirectory = getWebAppSourceDirectory()
         logger.info "Webapp source directory = ${resolvedWebAppSourceDirectory?.canonicalPath}"
 
         if(resolvedWebAppSourceDirectory) {
-            File defaultConfigFile = new File(getWebAppSourceDirectory(), "/${AbstractTomcatRun.CONFIG_FILE}")
+            File defaultConfigFile = new File(getWebAppSourceDirectory(), "/${CONFIG_FILE}")
 
             // If context.xml wasn't provided, check the default location
             if(!getConfigFile() && defaultConfigFile.exists()){
@@ -77,30 +72,12 @@ class TomcatRun extends AbstractTomcatRun {
     @Override
     void setWebApplicationContext() {
         getServer().createContext(getFullContextPath(), getWebAppSourceDirectory()?.canonicalPath)
-
-        if(isClassesJarScanningRequired()) {
+        if (isClassesJarScanningRequired()) {
             setupClassesJarScanning()
         }
     }
 
-    /**
-     * Checks if used Tomcat version is 6.x.
-     *
-     * @return Flag
-     */
-    @Internal
-    protected boolean isTomcat6x() {
-        getServer().version == TomcatVersion.VERSION_6_0_X
-    }
-
-    /**
-     * Checks to see if classes JAR scanning is required.
-     *
-     * @return Flag
-     */
-    private boolean isClassesJarScanningRequired() {
-        !isTomcat6x() && !existsWebXml()
-    }
+    private boolean isClassesJarScanningRequired() { !existsWebXml() }
 
     /**
      * Checks if web.xml exists in web application source directory.

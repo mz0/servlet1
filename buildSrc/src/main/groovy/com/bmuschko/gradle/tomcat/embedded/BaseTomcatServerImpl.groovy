@@ -15,7 +15,7 @@ abstract class BaseTomcatServerImpl implements TomcatServer {
     def context
     private boolean stopped
 
-    public BaseTomcatServerImpl() {
+    BaseTomcatServerImpl() {
         Class serverClass = loadClass(getServerClassName())
         this.tomcat = serverClass.newInstance()
     }

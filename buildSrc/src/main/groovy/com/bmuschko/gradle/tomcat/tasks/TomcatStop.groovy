@@ -47,6 +47,7 @@ class TomcatStop extends Tomcat {
         if(!getStopKey()) {
             throw new InvalidUserDataException('Please specify a valid stopKey')
         }
+        logger.quiet "tomcat stopPort=${getStopPort()}"
 
         try {
             Socket s = new Socket(InetAddress.getByName('127.0.0.1'), getStopPort())

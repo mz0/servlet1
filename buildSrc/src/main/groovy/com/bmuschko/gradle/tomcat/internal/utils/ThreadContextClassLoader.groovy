@@ -15,7 +15,7 @@
  */
 package com.bmuschko.gradle.tomcat.internal.utils
 
-public interface ThreadContextClassLoader {
+interface ThreadContextClassLoader {
     /**
      * Performs the closure with local thread context classloader.
      *
